@@ -1,6 +1,6 @@
 # School project - Autonomous RC-car - ELA22, YRGO
 
-Detailed report in swedish.
+Detailed report in swedish:
 placeholderlink.com
 
 ## Introduction
