@@ -1,7 +1,7 @@
 // connect motor controller pins to Arduino digital pins
 // motor one
-#define KillSwitch 8 // Pin nummer för killswitch på startmodul
-#define RemoteStart 9 // Pin nummer för start modulens remote start
+#define KillSwitch 2 // Pin nummer för killswitch på startmodul
+#define RemoteStart 3 // Pin nummer för start modulens remote start
 
 #define MOTOR_FORWARD  10
 #define MOTOR_BACKWARD 11 
@@ -34,12 +34,6 @@ void setup()
 
 void demo()
 {
-  // this function will run the motors across the range of possible speeds
-  // note that maximum speed is determined by the motor itself and the operating voltage
-  // the PWM values sent by analogWrite() are fractions of the maximum speed possible 
-  // by your hardware
-  // turn on motor
-  // accelerate from zero to maximum speed
   for (int i = 0; i < 255; i++)
   {
     motor_forward(i);
@@ -55,7 +49,6 @@ void loop()
   }
   while(1)
   {
-
     digitalWrite(MOTOR_BACKWARD, 0);
     digitalWrite(MOTOR_FORWARD, 0);
   }
