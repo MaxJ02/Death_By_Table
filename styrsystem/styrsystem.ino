@@ -1,6 +1,6 @@
 #include "header.h"
 
-#define RUN_SIGNAL 10
+#define RUN_SIGNAL 12
 #define REVERSE 8
 #define REVERSE_COUNT 30 //3 sekunder
 #define RESTORE_COUNT 20 //2 sekunder
@@ -129,18 +129,19 @@ void setup()
   servo_init(&servo1,95,         // servons "mitt" Ändra inte.
                      60,130,     // Min & max vinklar
                      0,1024,     // min max sensor avstånd
-                     1,0.05, 0); // PID
+                     0.75,0.01, 0.6); // PID
 }
 
 
 
 void loop()
 {
-  while(1)
+  while(digitalRead(RUN_SIGNAL)==1)
   {
   servo1.tof_left.val = sensors[1].read();
   servo1.tof_right.val = sensors[0].read();
   servo_run(&servo1);
   //print_values();
   }
+  myServo.write(95);
 }
