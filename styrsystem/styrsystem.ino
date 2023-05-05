@@ -126,7 +126,10 @@ void setup()
   }
 
   //PID initiering på servo
-  servo_init(&servo1,95,56,130,0,1024,1,0.001,0.1);
+  servo_init(&servo1,95,         // servons "mitt" Ändra inte.
+                     60,130,     // Min & max vinklar
+                     0,1024,     // min max sensor avstånd
+                     1,0.05, 0); // PID
 }
 
 
