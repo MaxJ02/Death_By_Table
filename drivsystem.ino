@@ -1,8 +1,8 @@
 // connect motor controller pins to Arduino digital pins.
 // motor one
-#define KillSwitch 2 // Pin nummer för killswitch på startmodul
-#define RemoteStart 3 // Pin nummer för start modulens remote start
-#define StartSignal 6 // Pin nummer som signalerar till styr arduino att starta
+#define KillSwitch 2 // Pin nummer för killswitch på startmodul.
+#define RemoteStart 3 // Pin nummer för start modulens remote start.
+#define StartSignal 6 // Pin nummer som signalerar till styr arduino att starta.
 
 #define MOTOR_FORWARD  10
 #define MOTOR_BACKWARD 11 
@@ -35,7 +35,7 @@ void setup()
   motor_wait_for_start();
 }
 
-//Sätter motorhastighet  i procent mellan 0-100%
+//Sätter motorhastighet  i procent mellan 0-100%.
 void set_speed(uint8_t speed)
 {
   speed = map(speed, 0,100,0,255);
