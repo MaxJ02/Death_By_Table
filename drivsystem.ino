@@ -1,4 +1,4 @@
-// connect motor controller pins to Arduino digital pins
+// connect motor controller pins to Arduino digital pins.
 // motor one
 #define KillSwitch 2 // Pin nummer för killswitch på startmodul
 #define RemoteStart 3 // Pin nummer för start modulens remote start
