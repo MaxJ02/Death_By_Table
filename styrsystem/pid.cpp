@@ -86,14 +86,14 @@ static inline void pid_check_output(struct pid* self)
 }
 
 
-/********************************************************************************
+/*********************************************************************************
 * pid_print: Prints target value, input, output and last measured error for
 *            PID controller. The output is printed in the terminal as default.
 *            All floating point values are printed with one decimal.
 *
 *            - self   : Reference to the PID controller.
 *            - ostream: Reference to output stream used (default = stdout).
-********************************************************************************/
+*********************************************************************************/
 void pid_print(const struct pid* self,
                FILE* ostream)
 {
