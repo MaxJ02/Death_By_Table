@@ -1,7 +1,8 @@
-#include "header.h"
+#include "header.hpp"
 
-#define RUN_SIGNAL 12
-#define REVERSE 8
+#define RUN_SIGNAL 4
+#define REVERSE 3
+#define BOOST 2
 #define REVERSE_COUNT 30 //3 sekunder
 #define RESTORE_COUNT 20 //2 sekunder
 
@@ -12,7 +13,7 @@ struct servo servo1;
 
 // Sensor variables
 // The Arduino pin connected to the XSHUT pin of each sensor.
-const uint8_t xshutPins[] = { 6, 7 };
+const uint8_t xshutPins[] = {5,6,7};
 
 // The number of sensors in your system.
 const uint8_t sensorCount = sizeof(xshutPins) / sizeof(uint8_t);
@@ -55,7 +56,7 @@ void check_reverse()
       digitalWrite(REVERSE, 0);
     }
   }
-  else if(sensors[2].read() <200 )
+  else if(sensors[1].read() <200 )
   {
     timer_counter++;
     if(timer_counter >= REVERSE_COUNT)
@@ -66,6 +67,17 @@ void check_reverse()
     }
   }
   else timer_counter = 0;
+}
+
+void check_boost()
+{
+  double frontdistance = sensors[1].read();
+  if(frontdistance < 500 && frontdistance > 200)
+  {
+    digitalWrite(BOOST, HIGH);
+    delay(10);
+  }
+  digitalWrite(BOOST, LOW);
 }
 
 /********************************************************************************
@@ -83,14 +95,22 @@ void print_values()
   Serial.print("Angle: ");
   Serial.print(servo1.pid.output);
   Serial.print('\t');
+  Serial.print("Frontlow: ");
+  Serial.print(sensors[1].read());
+  // Serial.print('\t');
+  // Serial.print("Fronthigh: ");
+  // Serial.print(sensors[3].read());
+  // Serial.print('\t');
   Serial.println();
 }
 
 
 void setup()
 {
-  //Start signal
+  //Kommunikations pinnar till andra arduinon.
   pinMode(RUN_SIGNAL, INPUT);
+  pinMode(REVERSE, OUTPUT);
+  pinMode(BOOST, OUTPUT);
 
  // Servo setup
   myServo.attach(9);
@@ -127,21 +147,23 @@ void setup()
 
   //PID initiering på servo
   servo_init(&servo1,95,         // servons "mitt" Ändra inte.
-                     60,130,     // Min & max vinklar
-                     0,1024,     // min max sensor avstånd
-                     0.75,0.01, 0.6); // PID
+              60,130,     // Min & max vinklar
+              0,1024,     // min max sensor avstånd
+              0.75,0.01, 0.6); // PID
 }
-
-
 
 void loop()
 {
-  while(digitalRead(RUN_SIGNAL)==1)
+  if(digitalRead(RUN_SIGNAL)==1)
   {
-  servo1.tof_left.val = sensors[1].read();
-  servo1.tof_right.val = sensors[0].read();
-  servo_run(&servo1);
-  //print_values();
+      servo1.tof_left.val = sensors[2].read();
+      servo1.tof_right.val = sensors[0].read();
+      check_boost();
+      servo_run(&servo1);
+      //print_values();
   }
-  myServo.write(95);
+  if(digitalRead(RUN_SIGNAL)==0)
+  {
+    myServo.write(95);
+  }
 }
