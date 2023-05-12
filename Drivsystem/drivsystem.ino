@@ -27,13 +27,18 @@ static inline void motor_wait_for_start(void)
   return;
 }
 
+static inline void boost(int speed)
+{
+  set_speed(speed);
+  delay(500);
+}
+
 void setup()
 {
   // Initierar pinnar för motorstyrning samt startmodul.
   pinMode(RemoteStart, INPUT);
   pinMode(KillSwitch, INPUT);
   pinMode(StartSignal, OUTPUT);
-  motor_wait_for_start();
 }
 
 //Sätter motorhastighet  i procent mellan 0-100%
@@ -43,8 +48,6 @@ void set_speed(uint8_t speed)
   analogWrite(MOTOR_FORWARD, speed);
   digitalWrite(MOTOR_BACKWARD, 0);
 }
-
-
 
 void demo()
 {
@@ -57,10 +60,18 @@ void demo()
 void loop()
 {
   //demo();
-  set_speed(60); // 70 var default med svagare LIPO, 60 Nuvarande default med 11v LIPO.
+  motor_wait_for_start(); 
   while((digitalRead(RemoteStart) && digitalRead(KillSwitch)) == 1)
   {
-
+    if(digitalRead(BOOST)==1)
+    {
+      set_speed(50);
+      delay(500);
+    }
+    else 
+    {
+      set_speed(20);// 70 var default med svagare LIPO, 60 Nuvarande default med 11v LIPO. Ny hastighet defualt 20.
+    }
   }
   while((digitalRead(RemoteStart) && digitalRead(KillSwitch)) == 0)
   {
