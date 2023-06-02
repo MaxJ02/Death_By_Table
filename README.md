@@ -1,8 +1,5 @@
 # School project - Autonomous RC-car - ELA22, YRGO
 
-Detailed report in swedish:
-placeholderlink.com
-
 ## Introduction
 
 The university of YRGO anually hosts an autonomous rc-car grand prix between the two first year electronic-engineering classes. The classes are split into three
