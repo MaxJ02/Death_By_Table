@@ -36,15 +36,15 @@ static inline void boost(int speed)
   delay(500);
 }
 
+// Initierar pinnar för motorstyrning samt startmodul.
 void setup()
 {
-  // Initierar pinnar för motorstyrning samt startmodul.
   pinMode(RemoteStart, INPUT);
   pinMode(KillSwitch, INPUT);
   pinMode(StartSignal, OUTPUT);
 }
 
-//Sätter motorhastighet  i procent mellan 0-100%
+//Sätter motorhastighet i procent mellan 0-100%
 void set_speed(uint8_t speed)
 {
   speed = map(speed, 0,100,0,255);
