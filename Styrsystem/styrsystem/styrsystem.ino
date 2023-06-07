@@ -3,8 +3,6 @@
 #define RUN_SIGNAL 4
 #define BOOST 3
 #define TURN 2
-#define REVERSE_COUNT 30 //3 sekunder
-#define RESTORE_COUNT 20 //2 sekunder
 #define BOOST_COUNT 10
 
 // Servo variables
@@ -23,7 +21,6 @@ VL53L1X sensors[sensorCount];
 double reverse_direction[10];
 bool boost = false;
 bool turn = false;
-bool reverse = false;
 uint16_t timer_counter = 0;
 uint16_t boost_counter = 0;
 static double frontdistance = 0;
@@ -47,38 +44,6 @@ void servo_run(struct servo* self)
    return;
 }
 
-/********************************************************************************
-* check_reverse: Om fram signalen har varit lägre än 200mm i 3 sekunder sätts 
-*                reverse variabeln till true.            
-********************************************************************************/
-void check_reverse()
-{
-  if(reverse == true)
-  {
-    timer_counter++;
-    if(timer_counter >= RESTORE_COUNT)
-    {
-      timer_counter = 0;
-      reverse = false;
-      digitalWrite(BOOST, 0);
-      digitalWrite(TURN, 0);
-
-    }
-  }
-  else if(frontdistance<200)
-  {
-    timer_counter++;
-    if(timer_counter >= REVERSE_COUNT)
-    {
-      timer_counter = 0;
-      reverse = true;
-      digitalWrite(BOOST, 1);
-      digitalWrite(TURN, 1);
-    }
-  }
-  else timer_counter = 0;
-}
-
 void check_boost()
 {
     if(boost == true)
@@ -100,17 +65,6 @@ void check_boost()
   // Serial.print("Frontlow: ");
   // Serial.print(frontdistance);
   // Serial.print('\t');
-}
-
-void store_direction()
-{
-  static int direction_counter;
-  if(direction_counter > sizeof(reverse_direction))
-  {
-    direction_counter = 0;
-  }
-  reverse_direction[direction_counter] = angle;
-  direction_counter++;
 }
 
 void get_front_distance()
@@ -145,7 +99,6 @@ void print_values()
   // Serial.print('\t');
   Serial.println();
 }
-
 
 void setup()
 {
@@ -206,17 +159,6 @@ void loop()
 {
   while(digitalRead(RUN_SIGNAL)==1)
   {
-    // check_reverse();
-    // if(digitalRead(REVERSE)==1)
-    // {
-    //   servo1.tof_left.val = sensors[0].read();
-    //   servo1.tof_right.val = sensors[2].read();
-    //   servo_run(&servo1);
-
-    //   print_values();
-    // }
-    // else
-    // {
       servo1.tof_left.val = sensors[2].read();
       servo1.tof_right.val = sensors[0].read();
       servo_run(&servo1);
@@ -243,5 +185,4 @@ void loop()
     //}
   }
   myServo.write(95);
-
 }
