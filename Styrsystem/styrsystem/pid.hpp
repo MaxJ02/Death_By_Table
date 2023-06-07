@@ -56,8 +56,9 @@ void pid_init(struct pid* self,
 void pid_regulate(struct pid* self,
                   const double new_input);
 
-
-
+/********************************************************************************
+* set_pid: Sets new pid values.
+********************************************************************************/
 void set_pid(struct pid* self, double kp, double ki, double kd);
 
 #endif /* PID_H_ */
