@@ -1,5 +1,8 @@
-// connect motor controller pins to Arduino digital pins
-// motor one
+/********************************************************************************
+* Drivsystem: Kod för att styra körriktning och motorhastighet via: 
+*             Motordrivare L298 dubbel H-Brygga 5-35V 2A.
+*             Samt Remotstart och stop.
+********************************************************************************/
 #define KillSwitch 2 // Pin nummer för killswitch på startmodul
 #define RemoteStart 3 // Pin nummer för start modulens remote start
 #define StartSignal A0 // Pin nummer som signalerar till styr arduino att starta
