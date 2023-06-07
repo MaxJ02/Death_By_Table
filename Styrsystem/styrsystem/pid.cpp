@@ -85,28 +85,9 @@ static inline void pid_check_output(struct pid* self)
    return;
 }
 
-
-/*********************************************************************************
-* pid_print: Prints target value, input, output and last measured error for
-*            PID controller. The output is printed in the terminal as default.
-*            All floating point values are printed with one decimal.
-*
-*            - self   : Reference to the PID controller.
-*            - ostream: Reference to output stream used (default = stdout).
-*********************************************************************************/
-void pid_print(const struct pid* self,
-               FILE* ostream)
-{
-   if (!ostream) ostream = stdout;
-   fprintf(ostream, "--------------------------------------------------------------------------------\n");
-   fprintf(ostream, "Target value:\t\t%.1f\n", self->target);
-   fprintf(ostream, "Input value:\t\t%.1f\n", self->input);
-   fprintf(ostream, "Output value:\t\t%.1f\n", self->output);
-   fprintf(ostream, "Last measured error:\t%.1f\n", self->last_error);
-   fprintf(ostream, "--------------------------------------------------------------------------------\n\n");
-   return;
-}
-
+/********************************************************************************
+* set_pid: Sets new pid values.
+********************************************************************************/
 void set_pid(struct pid* self, double kp, double ki, double kd)
 {
   self->kp = kp;
